@@ -11,12 +11,20 @@ from app.db import connect, initialize
 from app.models import ApplicationInput, Credentials, Status
 from app.analytics import get_summary
 from app.seed import seed_user
+from app.reports import ReportWorker, enqueue
 
 
 @asynccontextmanager
 async def lifespan(app):
     initialize()
-    yield
+    worker = ReportWorker() if os.getenv("APPLYTRACK_WORKER", "1") == "1" else None
+    if worker:
+        worker.start()
+    try:
+        yield
+    finally:
+        if worker:
+            worker.stop()
 
 
 app = FastAPI(title="ApplyTrack", version="1.0.0", lifespan=lifespan)
@@ -145,3 +153,37 @@ def summary(response: Response, user=Depends(current_user)):
 @app.post("/api/demo/seed")
 def load_demo(user=Depends(current_user)):
     return {"inserted": seed_user(user["id"])}
+
+
+@app.post("/api/reports", status_code=202)
+def request_report(response: Response, user=Depends(current_user)):
+    job = enqueue(user["id"])
+    response.headers["Location"] = f"/api/reports/{job['id']}"
+    return job
+
+
+@app.get("/api/reports")
+def list_reports(user=Depends(current_user)):
+    with connect() as db:
+        rows = db.execute("SELECT id,status,error,created_at,finished_at FROM report_jobs WHERE user_id=? ORDER BY created_at DESC,rowid DESC LIMIT 20", (user["id"],)).fetchall()
+    return {"items": [dict(row) for row in rows]}
+
+
+@app.get("/api/reports/{job_id}")
+def report_status(job_id: str, user=Depends(current_user)):
+    with connect() as db:
+        row = db.execute("SELECT id,status,error,created_at,finished_at FROM report_jobs WHERE id=? AND user_id=?", (job_id, user["id"])).fetchone()
+    if not row:
+        raise HTTPException(404, "Report not found")
+    return dict(row)
+
+
+@app.get("/api/reports/{job_id}/download")
+def download_report(job_id: str, user=Depends(current_user)):
+    with connect() as db:
+        row = db.execute("SELECT status,pdf FROM report_jobs WHERE id=? AND user_id=?", (job_id, user["id"])).fetchone()
+    if not row:
+        raise HTTPException(404, "Report not found")
+    if row["status"] != "completed":
+        raise HTTPException(409, "Report is not ready")
+    return Response(bytes(row["pdf"]), media_type="application/pdf", headers={"Content-Disposition": f'attachment; filename="applytrack-report-{job_id}.pdf"'})
