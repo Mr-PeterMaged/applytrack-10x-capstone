@@ -8,7 +8,7 @@ Built for the FlyRank **Your 10x Solution** backend capstone. Six original conce
 
 **Public repository:** https://github.com/Mr-PeterMaged/applytrack-10x-capstone
 
-**بالعربي:** [دليل البداية السريع](START_HERE_AR.md)
+**Quick start:** [Start Here](START_HERE.md)
 
 ![ApplyTrack dashboard](docs/images/dashboard.png)
 
