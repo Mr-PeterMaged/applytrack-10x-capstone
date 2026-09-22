@@ -1,5 +1,6 @@
 import time
 from datetime import date, timedelta
+
 from app.db import connect
 from tests.conftest import register
 
@@ -8,12 +9,22 @@ def test_cache_invalidation_expiry_and_calendar(client):
     register(client)
     assert client.get("/api/summary").headers["X-Cache"] == "MISS"
     assert client.get("/api/summary").headers["X-Cache"] == "HIT"
-    payload = {"company": "Cache Co", "role": "Intern", "status": "applied", "follow_up_on": (date.today() - timedelta(days=1)).isoformat()}
+    payload = {
+        "company": "Cache Co",
+        "role": "Intern",
+        "status": "applied",
+        "follow_up_on": (date.today() - timedelta(days=1)).isoformat(),
+    }
     item = client.post("/api/applications", json=payload).json()
     summary = client.get("/api/summary")
     assert summary.headers["X-Cache"] == "MISS"
     assert summary.json()["overdue"] == 1
-    assert client.put(f"/api/applications/{item['id']}", json={**payload, "status": "offer"}).status_code == 200
+    assert (
+        client.put(
+            f"/api/applications/{item['id']}", json={**payload, "status": "offer"}
+        ).status_code
+        == 200
+    )
     assert client.get("/api/summary").json()["overdue"] == 0
     assert client.get("/api/summary").headers["X-Cache"] == "HIT"
     with connect() as db:

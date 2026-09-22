@@ -1,4 +1,5 @@
 """Short-lived SQLite connections; every mutation uses a transaction."""
+
 import os
 import sqlite3
 from contextlib import contextmanager

@@ -1,5 +1,7 @@
 import io
+
 from pypdf import PdfReader
+
 from app.db import connect
 from app.reports import process_one, recover_jobs
 from tests.conftest import register
@@ -7,17 +9,24 @@ from tests.conftest import register
 
 def test_report_snapshot_pdf_and_isolation(client):
     register(client)
-    client.post("/api/applications", json={"company": "Original & Co <safe>", "role": "Intern", "notes": "x" * 3000})
+    client.post(
+        "/api/applications",
+        json={"company": "Original & Co <safe>", "role": "Intern", "notes": "x" * 3000},
+    )
     response = client.post("/api/reports")
     assert response.status_code == 202
     job_id = response.json()["id"]
     assert response.headers["Location"].endswith(job_id)
     assert client.get(f"/api/reports/{job_id}/download").status_code == 409
-    client.post("/api/applications", json={"company": "Added after snapshot", "role": "Intern"})
+    client.post(
+        "/api/applications", json={"company": "Added after snapshot", "role": "Intern"}
+    )
     assert process_one()
     result = client.get(f"/api/reports/{job_id}/download")
     assert result.status_code == 200 and result.content.startswith(b"%PDF")
-    text = " ".join(page.extract_text() for page in PdfReader(io.BytesIO(result.content)).pages)
+    text = " ".join(
+        page.extract_text() for page in PdfReader(io.BytesIO(result.content)).pages
+    )
     assert "Original & Co <safe>" in text
     assert "Added after snapshot" not in text
     assert client.get(f"/api/reports/{job_id}").json()["status"] == "completed"
@@ -35,8 +44,10 @@ def test_recovery_failure_and_quota(client, monkeypatch):
         db.execute("UPDATE report_jobs SET status='running' WHERE id=?", (job,))
     recover_jobs()
     assert client.get(f"/api/reports/{job}").json()["status"] == "queued"
+
     def fail(_):
         raise RuntimeError("private details must not leak")
+
     monkeypatch.setattr("app.reports.make_pdf", fail)
     assert process_one()
     result = client.get(f"/api/reports/{job}").json()

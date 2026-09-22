@@ -1,5 +1,6 @@
 from datetime import date
 from enum import Enum
+
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
@@ -13,7 +14,13 @@ class Credentials(BaseModel):
     def email_format(cls, value):
         value = value.strip().lower()
         local, separator, domain = value.partition("@")
-        if not separator or not local or "." not in domain or "@" in domain or any(c.isspace() for c in value):
+        if (
+            not separator
+            or not local
+            or "." not in domain
+            or "@" in domain
+            or any(c.isspace() for c in value)
+        ):
             raise ValueError("Enter a valid email address")
         return value
 

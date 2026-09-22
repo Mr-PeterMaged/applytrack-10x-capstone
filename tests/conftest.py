@@ -1,5 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
+
 from app.main import app
 
 
@@ -13,6 +14,10 @@ def client(tmp_path, monkeypatch):
 
 def register(client, email="person@example.test"):
     import secrets
-    response = client.post("/api/auth/register", json={"email": email, "password": secrets.token_urlsafe(18)})
+
+    response = client.post(
+        "/api/auth/register",
+        json={"email": email, "password": secrets.token_urlsafe(18)},
+    )
     assert response.status_code == 201, response.text
     return response.json()
