@@ -9,6 +9,8 @@ from fastapi.staticfiles import StaticFiles
 from app.auth import COOKIE_NAME, DUMMY_HASH, check_auth_limit, create_session, current_user, password_hasher, token_digest
 from app.db import connect, initialize
 from app.models import ApplicationInput, Credentials, Status
+from app.analytics import get_summary
+from app.seed import seed_user
 
 
 @asynccontextmanager
@@ -131,3 +133,15 @@ def delete_application(application_id: int, user=Depends(current_user)):
         if not result.rowcount:
             raise HTTPException(404, "Application not found")
         db.execute("DELETE FROM summary_cache WHERE user_id=?", (user["id"],))
+
+
+@app.get("/api/summary")
+def summary(response: Response, user=Depends(current_user)):
+    result, cache_status = get_summary(user["id"])
+    response.headers["X-Cache"] = cache_status
+    return result
+
+
+@app.post("/api/demo/seed")
+def load_demo(user=Depends(current_user)):
+    return {"inserted": seed_user(user["id"])}
