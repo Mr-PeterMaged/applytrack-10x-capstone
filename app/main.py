@@ -45,9 +45,12 @@ async def security_headers(request, call_next):
     origin = request.headers.get("origin")
     if request.method in {"POST", "PUT", "DELETE", "PATCH"} and origin:
         parsed = urlsplit(origin)
+        public_origin = os.getenv("PUBLIC_BASE_URL")
+        expected = urlsplit(public_origin) if public_origin else request.url
+        expected_host = expected.netloc if public_origin else request.headers.get("host")
         if (
-            parsed.netloc != request.headers.get("host")
-            or parsed.scheme != request.url.scheme
+            parsed.netloc != expected_host
+            or parsed.scheme != expected.scheme
         ):
             return JSONResponse(
                 {"detail": "Cross-origin requests are not allowed"}, status_code=403

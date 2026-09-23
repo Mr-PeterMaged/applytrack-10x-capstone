@@ -14,3 +14,9 @@ artifacts/
 node_modules/
 playwright-report/
 test-results/
+
+# Deployment output and local configuration
+.vercel/
+node_modules/
+.env.local
+.env.*.local

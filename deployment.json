@@ -1,0 +1,15 @@
+{
+  "assets": [
+    [
+      "app/static",
+      "static"
+    ],
+    [
+      "app/static/index.html",
+      "index.html"
+    ]
+  ],
+  "backend": true,
+  "home": "/",
+  "demo": false
+}

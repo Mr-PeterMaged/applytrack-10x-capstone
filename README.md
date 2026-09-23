@@ -1,3 +1,20 @@
+# ApplyTrack — Application Workspace
+
+**Designed and developed by [Peter Maged](https://petermaged.com/).**
+
+Organize job applications, follow-ups, progress analytics and downloadable PDF reports.
+
+## Product and technical overview
+
+- **Implementation:** Python, FastAPI, SQLite/WAL, Argon2 sessions, ReportLab.
+- **Deployment:** Vercel frontend with an external backend; [DEPLOYMENT.md](DEPLOYMENT.md) contains exact settings and operational requirements.
+- **Ownership:** Peter Maged's project implementation; third-party libraries and upstream materials retain their attribution.
+- **License:** [LICENSE](LICENSE). Available for portfolio review, evaluation and further development under these terms.
+
+For project enquiries and implementation work: [petermaged.com](https://petermaged.com/).
+
+## Engineering guide and existing evidence
+
 # ApplyTrack
 
 **Your next chapter starts with a clear plan.**
