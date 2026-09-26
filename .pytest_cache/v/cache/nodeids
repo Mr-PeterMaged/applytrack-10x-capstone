@@ -1,0 +1,14 @@
+[
+  "tests/test_analytics.py::test_cache_invalidation_expiry_and_calendar",
+  "tests/test_analytics.py::test_seed_is_idempotent_and_private",
+  "tests/test_auth.py::test_auth_logout_and_expiry",
+  "tests/test_auth.py::test_auth_quota",
+  "tests/test_auth.py::test_ownership_validation_and_filters",
+  "tests/test_deployment_origin.py::test_configured_frontend_origin_can_register_through_proxy",
+  "tests/test_deployment_origin.py::test_configured_origin_rejects_wrong_scheme_and_other_hosts",
+  "tests/test_persistence.py::test_data_and_session_survive_restart",
+  "tests/test_persistence.py::test_ui_and_documentation_are_served",
+  "tests/test_reports.py::test_empty_report",
+  "tests/test_reports.py::test_recovery_failure_and_quota",
+  "tests/test_reports.py::test_report_snapshot_pdf_and_isolation"
+]

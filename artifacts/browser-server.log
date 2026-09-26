@@ -1,0 +1,38 @@
+INFO:     Started server process [2576]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:64983 (Press CTRL+C to quit)
+ApplyTrack: http://localhost:64983 | API docs: http://localhost:64983/docs
+INFO:     127.0.0.1:64988 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /static/styles.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65008 - "GET /static/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:65006 - "GET /static/favicon.svg HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "POST /api/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?limit=5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "POST /api/demo/seed HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?limit=5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "POST /api/applications HTTP/1.1" 201 Created
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?limit=5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?q=&limit=10&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?q=Browser+Test&limit=10&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "PUT /api/applications/9 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?q=Browser+Test&limit=10&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "DELETE /api/applications/9 HTTP/1.1" 204 No Content
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?q=Browser+Test&limit=10&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "POST /api/reports HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:65006 - "GET /api/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/reports HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/reports/5f789903b92745dfbafbce33da7b4b38/download HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "GET /api/applications?limit=5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65006 - "POST /api/auth/logout HTTP/1.1" 204 No Content

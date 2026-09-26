@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#153d36" />
+    <meta
+      name="description"
+      content="A calmer place to track your applications, plan follow-ups, and see your progress."
+    />
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg" />
+    <title>ApplyTrack — Your next chapter</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <div id="toast" role="status" aria-live="polite" hidden></div>
+    <section id="auth-view" class="auth-layout">
+      <div class="auth-story">
+        <a class="brand" href="/"
+          ><span class="brand-mark">a<span>↗</span></span> ApplyTrack<span
+            class="brand-dot"
+            >.</span
+          ></a
+        >
+        <div class="story-content">
+          <span class="eyebrow">A LITTLE ORGANIZATION. A BIG NEXT STEP.</span>
+          <h1>
+            Your next chapter<br />starts with<br /><em>a clear plan.</em>
+          </h1>
+          <p>
+            Keep your applications, follow-ups, and progress in one calm place.
+            Make room for the opportunity ahead.
+          </p>
+          <div class="story-card">
+            <span class="small-label">ONE STEP AT A TIME</span>
+            <div class="mini-flow">
+              <span>Apply</span><i>↗</i><span>Connect</span><i>↗</i
+              ><span>Grow</span>
+            </div>
+            <div class="mini-line"></div>
+            <p>Less time sorting tabs.<br />More time moving forward.</p>
+          </div>
+        </div>
+        <span class="story-footer"
+          >Built for your journey. Powered by your progress.</span
+        >
+      </div>
+      <div class="auth-panel">
+        <div class="auth-form-wrap">
+          <span class="eyebrow">YOUR PERSONAL CAREER WORKSPACE</span>
+          <h2 id="auth-title">Welcome back.</h2>
+          <p id="auth-description" class="muted">
+            Sign in and pick up where you left off.
+          </p>
+          <form id="auth-form">
+            <label for="email">Email address</label
+            ><input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="username"
+              placeholder="you@example.com"
+              required
+              maxlength="254"
+            /><label for="password">Password</label
+            ><input
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              minlength="10"
+              maxlength="128"
+              placeholder="At least 10 characters"
+              required
+            />
+            <p id="auth-error" class="error" role="alert"></p>
+            <button id="auth-submit" class="button primary full" type="submit">
+              Sign in <span>↗</span>
+            </button>
+          </form>
+          <p class="auth-switch">
+            <span id="switch-copy">New here?</span>
+            <button id="auth-toggle" class="text-button">
+              Create an account
+            </button>
+          </p>
+          <div class="privacy-note">
+            <span>◈</span>
+            <p>
+              A private space for your next move.<br />Use fictional data to
+              explore the demo.
+            </p>
+          </div>
+        </div>
+        <span class="auth-bottom"
+          >No subscriptions. No distractions. Just your next step.</span
+        >
+      </div>
+    </section>
+    <div id="workspace" class="workspace" hidden>
+      <aside class="sidebar">
+        <a class="brand" href="/"
+          ><span class="brand-mark">a<span>↗</span></span> ApplyTrack<span
+            class="brand-dot"
+            >.</span
+          ></a
+        ><span class="nav-label">WORKSPACE</span>
+        <nav aria-label="Main navigation">
+          <button class="nav-item active" data-page="overview">
+            <span>▦</span> Overview</button
+          ><button class="nav-item" data-page="applications">
+            <span>▤</span> Applications
+            <span id="nav-count" class="count-pill">0</span></button
+          ><button class="nav-item" data-page="reports">
+            <span>↧</span> Reports
+          </button>
+        </nav>
+        <div class="sidebar-note">
+          <span>✦</span>
+          <h3>Small steps add up.</h3>
+          <p>Every application is a little closer to what comes next.</p>
+          <button id="seed-button" class="text-button">
+            Load demo data ↗
+          </button>
+        </div>
+        <div class="profile">
+          <div class="avatar">P</div>
+          <div class="profile-info">
+            <strong>Personal workspace</strong><span id="user-email"></span>
+          </div>
+          <button
+            id="logout"
+            class="icon-button"
+            aria-label="Sign out"
+            title="Sign out"
+          >
+            ↪
+          </button>
+        </div>
+      </aside>
+      <main class="main">
+        <header class="topbar">
+          <span
+            >Your workspace <span class="breadcrumb">/</span>
+            <strong id="page-label">Overview</strong></span
+          >
+          <div class="topbar-right">
+            <span class="local-indicator"></span> A fresh start, every day
+          </div>
+        </header>
+        <div class="main-content">
+          <div class="page-heading">
+            <div>
+              <span class="eyebrow" id="page-eyebrow"
+                >LET'S KEEP THINGS MOVING</span
+              >
+              <h1 id="page-title">Your next move.</h1>
+              <p class="muted" id="page-description">
+                A little clarity for your application journey.
+              </p>
+            </div>
+            <button id="add-button" class="button primary">
+              ＋ New application
+            </button>
+          </div>
+          <section id="overview-page">
+            <div class="stats-grid">
+              <article class="stat-card">
+                <div class="stat-label">Total applications <span>↗</span></div>
+                <strong id="stat-total">0</strong
+                ><span class="stat-caption"
+                  >Opportunities in your pipeline</span
+                >
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">In conversation <span>◌</span></div>
+                <strong id="stat-interview">0</strong
+                ><span class="stat-caption"
+                  >Applications at interview stage</span
+                >
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">Offers received <span>✧</span></div>
+                <strong id="stat-offer">0</strong
+                ><span class="stat-caption">Your work is opening doors</span>
+              </article>
+              <article class="stat-card accent">
+                <div class="stat-label">Needs a nudge <span>◷</span></div>
+                <strong id="stat-overdue">0</strong
+                ><span class="stat-caption">Overdue follow-ups to revisit</span>
+              </article>
+            </div>
+            <div class="overview-grid">
+              <article class="panel pipeline-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>The bigger picture</h2>
+                    <p>Your applications, at a glance.</p>
+                  </div>
+                  <span class="small-tag">ALL TIME</span>
+                </div>
+                <div id="pipeline" class="pipeline"></div>
+                <div class="response-row">
+                  <span
+                    >Response rate
+                    <small
+                      >Interview, offer, or rejection / submitted</small
+                    ></span
+                  ><strong id="response-rate">0%</strong>
+                </div>
+              </article>
+              <article class="panel followup-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>On your radar</h2>
+                    <p>Overdue and next 7 days · up to 20</p>
+                  </div>
+                  <span class="radar-icon">◷</span>
+                </div>
+                <div id="followups"></div>
+              </article>
+            </div>
+            <article class="panel recent-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Recent applications</h2>
+                  <p>The latest steps in your journey.</p>
+                </div>
+                <button id="view-all" class="text-button">
+                  View all applications ↗
+                </button>
+              </div>
+              <div id="recent-table" class="table-wrap"></div>
+            </article>
+            <div class="bottom-note">
+              <span>✦</span> Progress isn't always a straight line. Keep showing
+              up.
+            </div>
+          </section>
+          <section id="applications-page" hidden>
+            <article class="panel">
+              <div class="filters">
+                <label class="search-label"
+                  ><span class="sr-only">Search company or role</span
+                  ><input
+                    id="search"
+                    placeholder="Search company or role…"
+                    maxlength="120"
+                    type="search" /></label
+                ><label
+                  ><span class="sr-only">Filter by status</span
+                  ><select id="status-filter">
+                    <option value="">All statuses</option>
+                    <option value="saved">Saved</option>
+                    <option value="applied">Applied</option>
+                    <option value="interview">Interview</option>
+                    <option value="offer">Offer</option>
+                    <option value="rejected">Rejected</option>
+                  </select></label
+                >
+              </div>
+              <div id="applications-table" class="table-wrap"></div>
+              <div class="pagination">
+                <span id="results-count"></span>
+                <div>
+                  <button id="previous" class="button secondary small">
+                    ← Previous</button
+                  ><button id="next" class="button secondary small">
+                    Next →
+                  </button>
+                </div>
+              </div>
+            </article>
+          </section>
+          <section id="reports-page" hidden>
+            <article class="report-banner">
+              <div>
+                <span class="eyebrow">YOUR PROGRESS, ON PAPER</span>
+                <h2>A clear view of how far you've come.</h2>
+                <p>
+                  Create a PDF with your current pipeline, application details,
+                  and notes.
+                </p>
+              </div>
+              <button id="generate-report" class="button primary">
+                ↧ Create PDF report
+              </button>
+            </article>
+            <article class="panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Your reports</h2>
+                  <p>Latest 20 reports · snapshots of your progress</p>
+                </div>
+              </div>
+              <div id="reports-list"></div>
+            </article>
+          </section>
+        </div>
+      </main>
+    </div>
+    <dialog id="application-dialog">
+      <form id="application-form">
+        <div class="dialog-heading">
+          <div>
+            <span class="eyebrow">ONE MORE POSSIBILITY</span>
+            <h2 id="dialog-title">New application</h2>
+          </div>
+          <button
+            id="close-dialog"
+            type="button"
+            class="icon-button"
+            aria-label="Close dialog"
+          >
+            ×
+          </button>
+        </div>
+        <input id="application-id" type="hidden" />
+        <div class="form-grid">
+          <label
+            >Company<input
+              name="company"
+              id="company"
+              required
+              maxlength="120"
+              placeholder="Company name" /></label
+          ><label
+            >Role<input
+              name="role"
+              id="role"
+              required
+              maxlength="160"
+              placeholder="Backend Engineering Intern" /></label
+          ><label
+            >Status<select
+              name="status"
+              id="application-status"
+              aria-label="Status"
+            >
+              <option value="saved">Saved</option>
+              <option value="applied">Applied</option>
+              <option value="interview">Interview</option>
+              <option value="offer">Offer</option>
+              <option value="rejected">Rejected</option>
+            </select></label
+          ><label
+            >Application date<input
+              name="applied_on"
+              id="applied-on"
+              type="date"
+              required /></label
+          ><label
+            >Follow-up date <span class="muted">(optional)</span
+            ><input name="follow_up_on" id="follow-up-on" type="date" /></label
+          ><label class="wide"
+            >Notes <span class="muted">(optional)</span
+            ><textarea
+              name="notes"
+              id="notes"
+              rows="4"
+              maxlength="3000"
+              placeholder="What would you like to remember?"
+            ></textarea>
+          </label>
+        </div>
+        <p id="application-error" class="error" role="alert"></p>
+        <div class="dialog-actions">
+          <button id="cancel-dialog" type="button" class="button secondary">
+            Cancel</button
+          ><button type="submit" class="button primary" id="save-application">
+            Save application
+          </button>
+        </div>
+      </form>
+    </dialog>
+  <footer class="pm-credit" aria-label="Developer credits"><div>Developed by <a href="https://petermaged.com/">peter maged</a></div><div>© 2026 PeterMaged. All rights reserved.</div></footer>
+</body>
+</html>
